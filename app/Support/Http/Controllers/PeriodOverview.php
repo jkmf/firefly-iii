@@ -283,18 +283,19 @@ trait PeriodOverview
         foreach ($dates as $currentDate) {
             $title     = Navigation::periodShow($currentDate['end'], $currentDate['period']);
 
-            if ($loops < 10) {
-                // set to correct array
-                if ('expenses' === $transactionType || 'withdrawal' === $transactionType) {
-                    $spent = $this->filterJournalsByDate($genericSet, $currentDate['start'], $currentDate['end']);
-                }
-                if ('revenue' === $transactionType || 'deposit' === $transactionType) {
-                    $earned = $this->filterJournalsByDate($genericSet, $currentDate['start'], $currentDate['end']);
-                }
-                if ('transfer' === $transactionType || 'transfers' === $transactionType) {
-                    $transferred = $this->filterJournalsByDate($genericSet, $currentDate['start'], $currentDate['end']);
-                }
+            if ($loops >= 10) break; 
+            
+            // set to correct array
+            if ('expenses' === $transactionType || 'withdrawal' === $transactionType) {
+                $spent = $this->filterJournalsByDate($genericSet, $currentDate['start'], $currentDate['end']);
             }
+            if ('revenue' === $transactionType || 'deposit' === $transactionType) {
+                $earned = $this->filterJournalsByDate($genericSet, $currentDate['start'], $currentDate['end']);
+            }
+            if ('transfer' === $transactionType || 'transfers' === $transactionType) {
+                $transferred = $this->filterJournalsByDate($genericSet, $currentDate['start'], $currentDate['end']);
+            }
+            
             $entries[] = [
                 'title'              => $title,
                 'route'              => route('transactions.index', [
